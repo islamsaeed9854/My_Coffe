@@ -1,0 +1,51 @@
+{%extends 'base.html'%} {% block content%}
+
+<div class="my-form container p-5 my-5 rounded border border-warning">
+  <h2 class="text-center">Sign In</h2>
+  <hr />
+  {%include 'partials/_alerts.html'%}
+   {% if request.user.is_authenticated %}
+  <div class="alert alert-primary" role="alert">
+    Welcome , {{request.user.username}} ,you are logged in
+  </div>
+  {%else%}
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="inputUsername">Username</label>
+      <input
+        name="username"
+        type="text"
+        class="form-control"
+        id="inputUsername"
+        placeholder=""
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="inputPassword">Password</label>
+      <input
+        type="password"
+        name="password"
+        class="form-control"
+        id="inputPassword"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <div class="pretty p-svg p-curve p-jelly">
+        <input type="checkbox" checked name="rememberme" id="inputTerms" />
+        <div class="state p-warning">
+          <!-- svg path -->
+          <label>Remember Me</label>
+        </div>
+      </div>
+    </div>
+    <button type="submit" name="btnlogin" class="btn btn-warning">Login</button>
+    <button type="submit" class="btn btn-warning">Other</button>
+  </form>
+  {%endif%}
+</div>
+
+{%endblock%}

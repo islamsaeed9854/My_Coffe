@@ -1,0 +1,17 @@
+{% if messages %} {%for msg in messages%}
+    <div
+      class="alert alert-{{msg.tags}} alert-dismissible fade show"
+      role="alert"
+    >
+      <strong>
+        {% firstof msg.tags as s %} 
+        {% if msg.tags == 'danger' %} 
+          {% firstof "Error" as s %}
+        {%else%} 
+          {% firstof msg.tags as s %} 
+        {% endif %} 
+        {{s}}!
+      </strong>
+      {{msg}}
+    </div>
+{%endfor%} {%endif%}

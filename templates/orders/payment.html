@@ -1,0 +1,65 @@
+{%extends 'base.html'%} {% block content%}
+
+<div class="my-form container p-5 my-5 rounded border border-warning">
+    <h2 class="text-center">Checkout</h2>
+    <hr>
+    {%include 'partials/_alerts.html'%}
+    {% if request.user.is_authenticated and not request.user.is_anonymous  and order %}
+    {%if is_added == True%}
+    <form method="post" style="display: none;">
+        {%else%}
+        <form method="post">
+            {%endif%}
+
+            {% csrf_token %}
+             Order Number : {{order.id}}
+             <hr>
+             Product Count : {{orderdatails.count}}
+             <hr>
+             Total Amount : {{total}}$
+             <hr>
+             <a href="{% url 'cart'%}" class="btn btn-secondary">Cart details</a>
+             <hr>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputship_address">Shipment Adrees</label>
+                    <input type="text" class="form-control" value="{{ship_address}}" name="ship_address"
+                        id="inputship_address" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputship_phpne">Shipment Phone</label>
+                    <input type="text" class="form-control" value="{{ship_phone}}" name="ship_phone"
+                        id="inputship_phpne" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputcard_number">Card Number</label>
+                    <input placeholder="333 333 333 333" type="text" class="form-control" value="{{card_number}}"
+                        name="card_number" id="inputcard_number" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputexpire">Expire</label>
+                    <input type="text" class="form-control" value="{{expire}}" name="expire" id="inputexpire"
+                        placeholder="mm/YY" required>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputsecurity_code">Security Code</label>
+                    <input  class="form-control" value="{{security_code}}" name="security_code"
+                        id="inputsecurity_code" placeholder="333" required>
+                </div>
+            </div>
+            <button type="submit" name="btnpayment" class="btn btn-warning">Pay</button>
+        </form>
+        {% elif not order%}
+          <h4 class="alert alert-warning">No Orders Here</h4>
+        {%else%}
+           <h5 class="alert alert-warninig">
+            You must be <a href="{% url 'signin' %}" class="text-dark"> Logged in</a>
+           </h5>
+          {%endif%}
+
+</div>
+
+
+{%endblock%}
